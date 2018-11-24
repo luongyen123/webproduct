@@ -1,0 +1,66 @@
+*{
+	font-family: 'Roboto Condensed', sans-serif;
+}
+body{
+	background:url('../images/background.png') no-repeat;
+	background-size: cover;
+}
+.zang_login {
+	margin-top: 30px;
+}
+.login_mainform {
+	padding: 20px;
+	font-size: 1em;
+	background: #FFF;
+	border: 2px solid #EEE;
+}
+.menu {
+	background: #FFF;
+	
+}
+.menu h1 {
+	font-size: 20px;
+	line-height:30px;
+	text-transform: uppercase;
+}
+.menu a {
+	color: #e77f1d;
+	display: block;
+	
+}
+.menu a:hover {
+	text-decoration: none;	
+	color: red;
+	transition: 0.5s;
+}
+.logo {
+	background:url('../images/logo.png') no-repeat;
+	background-size: 55px 55px;
+	display: block;
+	float: left;
+	width: 55px;
+	margin: 10px 10px 10px 0;
+	height: 55px;
+}
+.zang_menu {
+	list-style: none;
+	margin-bottom: 0px;
+}
+.zang_menu li {
+	line-height: 55px;
+	padding: 10px;
+	display: inline-block;
+	margin-bottom: 0;
+}
+
+.footer {
+	background: #FFF;
+	margin-top: 20px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 10px 0;
+}
+.tparrows {
+	display: none;
+}
