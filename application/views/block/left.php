@@ -10,7 +10,7 @@
 					</li>
 					<li>
 						<a href="<?php echo admin_url('Historypaid')?>">
-							<div class="glyphicon glyphicon-th-list"></div> Hợp đồng
+							<div class="glyphicon glyphicon-th-list"></div> Cầm đồ
 						</a>
 					</li>
 					<li>

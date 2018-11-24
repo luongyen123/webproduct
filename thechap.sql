@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 12, 2018 lúc 12:54 AM
--- Phiên bản máy phục vụ: 10.1.34-MariaDB
--- Phiên bản PHP: 5.6.37
+-- Host: 127.0.0.1
+-- Generation Time: Nov 24, 2018 at 11:24 AM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `thechap`
+-- Database: `thechap`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -43,7 +43,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `password`, `email`, `role_type`, `createdat`, `updatedat`, `del_flag`, `address`, `phone`, `idcard`) VALUES
@@ -56,13 +56,12 @@ INSERT INTO `admin` (`id`, `name`, `password`, `email`, `role_type`, `createdat`
 (14, 'admin123', 'e10adc3949ba59abbe56e057f20f883e', 'hoangdieutrinh1996@gmail.com', '', '2018-09-21 03:12:37', '0000-00-00 00:00:00', '0', 'hanoi32', '016588987', 12345678),
 (15, 'admin12345', 'e10adc3949ba59abbe56e057f20f883e', 'test2@gmail.com', '', '2018-09-21 04:14:37', '0000-00-00 00:00:00', '0', 'hà nội', '12378896423', 1234567),
 (16, 'trinh gdragon ', 'e10adc3949ba59abbe56e057f20f883e', 'trinhgd@gmail.com', '', '2018-09-21 04:16:56', '0000-00-00 00:00:00', '0', 'hà nội', '12378896423', 2147483647),
-(17, 'hoanglan7', '25d55ad283aa400af464c76d713c07ad', 'test@1gmail.com', '', '2018-09-23 07:55:46', '0000-00-00 00:00:00', '0', 'hanoi2', '0978675853', 12345678),
-(19, 'lanhanh90', 'e10adc3949ba59abbe56e057f20f883e', ' lananh@gmail.com', '', '2018-09-26 06:58:01', '0000-00-00 00:00:00', '0', ' vĩnh phúc ', ' 0916829783', 12345678);
+(17, 'hoanglan7', '25d55ad283aa400af464c76d713c07ad', 'test@1gmail.com', '', '2018-09-23 07:55:46', '0000-00-00 00:00:00', '0', 'hanoi2', '0978675853', 12345678);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `attribute`
+-- Table structure for table `attribute`
 --
 
 CREATE TABLE `attribute` (
@@ -74,7 +73,7 @@ CREATE TABLE `attribute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `attribute`
+-- Dumping data for table `attribute`
 --
 
 INSERT INTO `attribute` (`id`, `manufacture`, `type`, `color`, `year`) VALUES
@@ -88,7 +87,28 @@ INSERT INTO `attribute` (`id`, `manufacture`, `type`, `color`, `year`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Table structure for table `banggia`
+--
+
+CREATE TABLE `banggia` (
+  `bg_id` int(11) NOT NULL,
+  `bg_loai` varchar(10) NOT NULL,
+  `bg_ten` varchar(255) NOT NULL,
+  `bg_data` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `banggia`
+--
+
+INSERT INTO `banggia` (`bg_id`, `bg_loai`, `bg_ten`, `bg_data`) VALUES
+(3, 'ngay', 'Bảng giá lãi suất ngày', '{\"ngay2\":\"7\",\"ngay5\":\"5\",\"ngay10\":\"2\"}'),
+(4, 'tuan', 'Bảng giá lãi suất tuần', '{\"tuan2\":\"6\",\"tuan5\":\"4\",\"tuan10\":\"1\"}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -102,7 +122,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `parent_id`, `name`, `note`, `admin_id`, `createdat`, `updatedat`) VALUES
@@ -116,38 +136,28 @@ INSERT INTO `category` (`id`, `parent_id`, `name`, `note`, `admin_id`, `createda
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `customer`
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `fullname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `birrthday` date NOT NULL,
   `phone` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `money` int(11) NOT NULL,
-  `createdat` datetime NOT NULL,
-  `updateat` datetime NOT NULL,
-  `interested_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `address` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `note` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `sex` bit(2) NOT NULL,
-  `createdby` int(11) NOT NULL,
-  `loandate` date NOT NULL
+  `address` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `customer`
+-- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `fullname`, `birrthday`, `phone`, `money`, `createdat`, `updateat`, `interested_id`, `category_id`, `address`, `note`, `sex`, `createdby`, `loandate`) VALUES
-(4, 'nguyễn thế anh', '0000-00-00', '986682755', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1111111111, 0, 'HCM', '', b'00', 0, '0000-00-00'),
-(5, 'hoàng thị lan anh ', '0000-00-00', '0916829783', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1234567890, 0, 'ha nội', '', b'00', 0, '0000-00-00');
+INSERT INTO `customer` (`id`, `fullname`, `phone`, `address`) VALUES
+(4, 'nguyễn thế anh', '986682755', 'HCM'),
+(5, 'hoàng thị lan anh ', '0916829783', 'ha nội');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `historypaid`
+-- Table structure for table `historypaid`
 --
 
 CREATE TABLE `historypaid` (
@@ -170,7 +180,7 @@ CREATE TABLE `historypaid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `historypaid`
+-- Dumping data for table `historypaid`
 --
 
 INSERT INTO `historypaid` (`id`, `money`, `paiddate`, `typepaid`, `note`, `status`, `createdat`, `updatedat`, `createdby`, `updateby`, `customer_id`, `bks`, `sk`, `sm`, `type`, `category_id`) VALUES
@@ -181,7 +191,7 @@ INSERT INTO `historypaid` (`id`, `money`, `paiddate`, `typepaid`, `note`, `statu
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `history_interestrate`
+-- Table structure for table `history_interestrate`
 --
 
 CREATE TABLE `history_interestrate` (
@@ -194,7 +204,7 @@ CREATE TABLE `history_interestrate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `history_interestrate`
+-- Dumping data for table `history_interestrate`
 --
 
 INSERT INTO `history_interestrate` (`id`, `startdate`, `percent`, `note`, `status`, `interestrate_id`) VALUES
@@ -204,7 +214,7 @@ INSERT INTO `history_interestrate` (`id`, `startdate`, `percent`, `note`, `statu
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `interest_rate`
+-- Table structure for table `interest_rate`
 --
 
 CREATE TABLE `interest_rate` (
@@ -218,7 +228,7 @@ CREATE TABLE `interest_rate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `interest_rate`
+-- Dumping data for table `interest_rate`
 --
 
 INSERT INTO `interest_rate` (`id`, `name`, `note`, `status`, `createdat`, `updatedat`, `admin_id`) VALUES
@@ -229,7 +239,7 @@ INSERT INTO `interest_rate` (`id`, `name`, `note`, `status`, `createdat`, `updat
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `paid_historys`
+-- Table structure for table `paid_historys`
 --
 
 CREATE TABLE `paid_historys` (
@@ -241,66 +251,85 @@ CREATE TABLE `paid_historys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `paid_historys`
+-- Dumping data for table `paid_historys`
 --
 
 INSERT INTO `paid_historys` (`id`, `id_paid`, `date_paid`, `money`, `status`) VALUES
 (4, 5, '2018-11-02 16:18:40', 100000000, 2);
 
+-- --------------------------------------------------------
+
 --
--- Chỉ mục cho các bảng đã đổ
+-- Table structure for table `phieucamdo`
+--
+
+CREATE TABLE `phieucamdo` (
+  `phieucam_id` int(11) NOT NULL,
+  `maphieu` varchar(50) NOT NULL,
+  `sotien` float NOT NULL,
+  `khach_id` int(11) NOT NULL,
+  `ngayhethan` int(10) NOT NULL,
+  `banggia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `attribute`
+-- Indexes for table `attribute`
 --
 ALTER TABLE `attribute`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `category`
+-- Indexes for table `banggia`
+--
+ALTER TABLE `banggia`
+  ADD PRIMARY KEY (`bg_id`);
+
+--
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
   ADD KEY `admin_id` (`admin_id`);
 
 --
--- Chỉ mục cho bảng `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `interested_id` (`interested_id`,`category_id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `historypaid`
+-- Indexes for table `historypaid`
 --
 ALTER TABLE `historypaid`
   ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`);
 
 --
--- Chỉ mục cho bảng `history_interestrate`
+-- Indexes for table `history_interestrate`
 --
 ALTER TABLE `history_interestrate`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `interestrate_id` (`interestrate_id`);
 
 --
--- Chỉ mục cho bảng `interest_rate`
+-- Indexes for table `interest_rate`
 --
 ALTER TABLE `interest_rate`
   ADD PRIMARY KEY (`id`),
   ADD KEY `admin_id` (`admin_id`);
 
 --
--- Chỉ mục cho bảng `paid_historys`
+-- Indexes for table `paid_historys`
 --
 ALTER TABLE `paid_historys`
   ADD PRIMARY KEY (`id`),
@@ -308,75 +337,93 @@ ALTER TABLE `paid_historys`
   ADD KEY `id_2` (`id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- Indexes for table `phieucamdo`
+--
+ALTER TABLE `phieucamdo`
+  ADD PRIMARY KEY (`phieucam_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT cho bảng `attribute`
+-- AUTO_INCREMENT for table `attribute`
 --
 ALTER TABLE `attribute`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT for table `banggia`
+--
+ALTER TABLE `banggia`
+  MODIFY `bg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT cho bảng `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `historypaid`
+-- AUTO_INCREMENT for table `historypaid`
 --
 ALTER TABLE `historypaid`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `history_interestrate`
+-- AUTO_INCREMENT for table `history_interestrate`
 --
 ALTER TABLE `history_interestrate`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `interest_rate`
+-- AUTO_INCREMENT for table `interest_rate`
 --
 ALTER TABLE `interest_rate`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `paid_historys`
+-- AUTO_INCREMENT for table `paid_historys`
 --
 ALTER TABLE `paid_historys`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- AUTO_INCREMENT for table `phieucamdo`
+--
+ALTER TABLE `phieucamdo`
+  MODIFY `phieucam_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `category`
+-- Constraints for table `category`
 --
 ALTER TABLE `category`
   ADD CONSTRAINT `category_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);
 
 --
--- Các ràng buộc cho bảng `history_interestrate`
+-- Constraints for table `history_interestrate`
 --
 ALTER TABLE `history_interestrate`
   ADD CONSTRAINT `history_interestrate_ibfk_1` FOREIGN KEY (`interestrate_id`) REFERENCES `interest_rate` (`id`);
 
 --
--- Các ràng buộc cho bảng `interest_rate`
+-- Constraints for table `interest_rate`
 --
 ALTER TABLE `interest_rate`
   ADD CONSTRAINT `interest_rate_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);

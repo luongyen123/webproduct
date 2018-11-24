@@ -191,7 +191,7 @@ function banggia(){
 	$data['giatuan']=$giatuan;
 	$data['giathang']=$giathang;
 
-	$header['title'] = "Bảng giá điện nước";
+	$header['title'] = "Bảng giá lãi suất";
 	$header['active'] = 'banggia';
 	
 	$this->load->view('header', $header);
