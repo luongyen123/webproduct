@@ -9,13 +9,18 @@
 						</a>
 					</li>
 					<li>
-						<a href="<?php echo admin_url('Historypaid')?>">
+						<a href="<?php echo admin_url('admin/getIndexPhieucamdo')?>">
 							<div class="glyphicon glyphicon-th-list"></div> Cầm đồ
 						</a>
 					</li>
 					<li>
 						<a href="<?php echo admin_url('admin/banggia')?>">
 							<div class="glyphicon glyphicon-calendar"></div> Bảng giá
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo admin_url('admin/getIndexCustomer')?>">
+							<div class="glyphicon glyphicon glyphicon-user"></div>Khách hàng
 						</a>
 					</li>
 					

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 24, 2018 at 11:24 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th10 25, 2018 lúc 07:15 AM
+-- Phiên bản máy phục vụ: 10.1.31-MariaDB
+-- Phiên bản PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `thechap`
+-- Cơ sở dữ liệu: `thechap`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Cấu trúc bảng cho bảng `admin`
 --
 
 CREATE TABLE `admin` (
@@ -43,7 +43,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `admin`
+-- Đang đổ dữ liệu cho bảng `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `password`, `email`, `role_type`, `createdat`, `updatedat`, `del_flag`, `address`, `phone`, `idcard`) VALUES
@@ -61,7 +61,7 @@ INSERT INTO `admin` (`id`, `name`, `password`, `email`, `role_type`, `createdat`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attribute`
+-- Cấu trúc bảng cho bảng `attribute`
 --
 
 CREATE TABLE `attribute` (
@@ -73,7 +73,7 @@ CREATE TABLE `attribute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `attribute`
+-- Đang đổ dữ liệu cho bảng `attribute`
 --
 
 INSERT INTO `attribute` (`id`, `manufacture`, `type`, `color`, `year`) VALUES
@@ -87,7 +87,7 @@ INSERT INTO `attribute` (`id`, `manufacture`, `type`, `color`, `year`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `banggia`
+-- Cấu trúc bảng cho bảng `banggia`
 --
 
 CREATE TABLE `banggia` (
@@ -98,7 +98,7 @@ CREATE TABLE `banggia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `banggia`
+-- Đang đổ dữ liệu cho bảng `banggia`
 --
 
 INSERT INTO `banggia` (`bg_id`, `bg_loai`, `bg_ten`, `bg_data`) VALUES
@@ -108,7 +108,7 @@ INSERT INTO `banggia` (`bg_id`, `bg_loai`, `bg_ten`, `bg_data`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -122,7 +122,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`id`, `parent_id`, `name`, `note`, `admin_id`, `createdat`, `updatedat`) VALUES
@@ -136,28 +136,28 @@ INSERT INTO `category` (`id`, `parent_id`, `name`, `note`, `admin_id`, `createda
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Cấu trúc bảng cho bảng `customer`
 --
 
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `fullname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `address` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `address` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `CMND` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `customer`
+-- Đang đổ dữ liệu cho bảng `customer`
 --
 
-INSERT INTO `customer` (`id`, `fullname`, `phone`, `address`) VALUES
-(4, 'nguyễn thế anh', '986682755', 'HCM'),
-(5, 'hoàng thị lan anh ', '0916829783', 'ha nội');
+INSERT INTO `customer` (`id`, `fullname`, `phone`, `address`, `CMND`) VALUES
+(6, 'Lê Văn A', '01236795734', 'Trâu Quỳ - Gia Lâm', '174500860');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `historypaid`
+-- Cấu trúc bảng cho bảng `historypaid`
 --
 
 CREATE TABLE `historypaid` (
@@ -180,7 +180,7 @@ CREATE TABLE `historypaid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `historypaid`
+-- Đang đổ dữ liệu cho bảng `historypaid`
 --
 
 INSERT INTO `historypaid` (`id`, `money`, `paiddate`, `typepaid`, `note`, `status`, `createdat`, `updatedat`, `createdby`, `updateby`, `customer_id`, `bks`, `sk`, `sm`, `type`, `category_id`) VALUES
@@ -191,7 +191,7 @@ INSERT INTO `historypaid` (`id`, `money`, `paiddate`, `typepaid`, `note`, `statu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `history_interestrate`
+-- Cấu trúc bảng cho bảng `history_interestrate`
 --
 
 CREATE TABLE `history_interestrate` (
@@ -204,7 +204,7 @@ CREATE TABLE `history_interestrate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `history_interestrate`
+-- Đang đổ dữ liệu cho bảng `history_interestrate`
 --
 
 INSERT INTO `history_interestrate` (`id`, `startdate`, `percent`, `note`, `status`, `interestrate_id`) VALUES
@@ -214,7 +214,7 @@ INSERT INTO `history_interestrate` (`id`, `startdate`, `percent`, `note`, `statu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `interest_rate`
+-- Cấu trúc bảng cho bảng `interest_rate`
 --
 
 CREATE TABLE `interest_rate` (
@@ -228,7 +228,7 @@ CREATE TABLE `interest_rate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `interest_rate`
+-- Đang đổ dữ liệu cho bảng `interest_rate`
 --
 
 INSERT INTO `interest_rate` (`id`, `name`, `note`, `status`, `createdat`, `updatedat`, `admin_id`) VALUES
@@ -239,7 +239,7 @@ INSERT INTO `interest_rate` (`id`, `name`, `note`, `status`, `createdat`, `updat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `paid_historys`
+-- Cấu trúc bảng cho bảng `paid_historys`
 --
 
 CREATE TABLE `paid_historys` (
@@ -251,7 +251,7 @@ CREATE TABLE `paid_historys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `paid_historys`
+-- Đang đổ dữ liệu cho bảng `paid_historys`
 --
 
 INSERT INTO `paid_historys` (`id`, `id_paid`, `date_paid`, `money`, `status`) VALUES
@@ -260,76 +260,88 @@ INSERT INTO `paid_historys` (`id`, `id_paid`, `date_paid`, `money`, `status`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phieucamdo`
+-- Cấu trúc bảng cho bảng `phieucamdo`
 --
 
 CREATE TABLE `phieucamdo` (
   `phieucam_id` int(11) NOT NULL,
-  `maphieu` varchar(50) NOT NULL,
-  `sotien` float NOT NULL,
-  `khach_id` int(11) NOT NULL,
-  `ngayhethan` int(10) NOT NULL,
-  `banggia` int(11) NOT NULL
+  `sotien` varchar(50) NOT NULL,
+  `fullname` varchar(20) NOT NULL,
+  `ngayhethan` varchar(10) NOT NULL,
+  `ngaycam` int(11) NOT NULL,
+  `banggia` int(11) NOT NULL,
+  `loaisp` varchar(10) NOT NULL,
+  `phone` varchar(11) NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `CMND` varchar(20) NOT NULL,
+  `thongtinsp` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Đang đổ dữ liệu cho bảng `phieucamdo`
+--
+
+INSERT INTO `phieucamdo` (`phieucam_id`, `sotien`, `fullname`, `ngayhethan`, `ngaycam`, `banggia`, `loaisp`, `phone`, `address`, `CMND`, `thongtinsp`) VALUES
+(2, '₫3,000,000', 'Lê Văn A', '2018-11-30', 1543124597, 3, 'Oto', '01236795734', 'Trâu Quỳ - Gia Lâm', '174500860', 'Audi A8 2014');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `admin`
+-- Chỉ mục cho bảng `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `attribute`
+-- Chỉ mục cho bảng `attribute`
 --
 ALTER TABLE `attribute`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `banggia`
+-- Chỉ mục cho bảng `banggia`
 --
 ALTER TABLE `banggia`
   ADD PRIMARY KEY (`bg_id`);
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
   ADD KEY `admin_id` (`admin_id`);
 
 --
--- Indexes for table `customer`
+-- Chỉ mục cho bảng `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `historypaid`
+-- Chỉ mục cho bảng `historypaid`
 --
 ALTER TABLE `historypaid`
   ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`);
 
 --
--- Indexes for table `history_interestrate`
+-- Chỉ mục cho bảng `history_interestrate`
 --
 ALTER TABLE `history_interestrate`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `interestrate_id` (`interestrate_id`);
 
 --
--- Indexes for table `interest_rate`
+-- Chỉ mục cho bảng `interest_rate`
 --
 ALTER TABLE `interest_rate`
   ADD PRIMARY KEY (`id`),
   ADD KEY `admin_id` (`admin_id`);
 
 --
--- Indexes for table `paid_historys`
+-- Chỉ mục cho bảng `paid_historys`
 --
 ALTER TABLE `paid_historys`
   ADD PRIMARY KEY (`id`),
@@ -337,93 +349,93 @@ ALTER TABLE `paid_historys`
   ADD KEY `id_2` (`id`);
 
 --
--- Indexes for table `phieucamdo`
+-- Chỉ mục cho bảng `phieucamdo`
 --
 ALTER TABLE `phieucamdo`
   ADD PRIMARY KEY (`phieucam_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT cho bảng `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `attribute`
+-- AUTO_INCREMENT cho bảng `attribute`
 --
 ALTER TABLE `attribute`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `banggia`
+-- AUTO_INCREMENT cho bảng `banggia`
 --
 ALTER TABLE `banggia`
   MODIFY `bg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `historypaid`
+-- AUTO_INCREMENT cho bảng `historypaid`
 --
 ALTER TABLE `historypaid`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `history_interestrate`
+-- AUTO_INCREMENT cho bảng `history_interestrate`
 --
 ALTER TABLE `history_interestrate`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `interest_rate`
+-- AUTO_INCREMENT cho bảng `interest_rate`
 --
 ALTER TABLE `interest_rate`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `paid_historys`
+-- AUTO_INCREMENT cho bảng `paid_historys`
 --
 ALTER TABLE `paid_historys`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `phieucamdo`
+-- AUTO_INCREMENT cho bảng `phieucamdo`
 --
 ALTER TABLE `phieucamdo`
-  MODIFY `phieucam_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `phieucam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `category`
+-- Các ràng buộc cho bảng `category`
 --
 ALTER TABLE `category`
   ADD CONSTRAINT `category_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);
 
 --
--- Constraints for table `history_interestrate`
+-- Các ràng buộc cho bảng `history_interestrate`
 --
 ALTER TABLE `history_interestrate`
   ADD CONSTRAINT `history_interestrate_ibfk_1` FOREIGN KEY (`interestrate_id`) REFERENCES `interest_rate` (`id`);
 
 --
--- Constraints for table `interest_rate`
+-- Các ràng buộc cho bảng `interest_rate`
 --
 ALTER TABLE `interest_rate`
   ADD CONSTRAINT `interest_rate_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);
