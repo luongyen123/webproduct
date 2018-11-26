@@ -142,6 +142,8 @@
 			<input type="radio" name="loaisp" value="dienthoai" class="loaisp"> Điện thoại
 			<input type="radio" name="loaisp" value="tablet" class="loaisp"> Tablet 
 			<p><input placeholder="Thông tin sản phẩm" oninput="this.className = ''" name="thongtinsp" id="thongtinsp"></p>
+			<button id="dinhgia" type="button">Định giá tự động</button>
+			<input type="text" name="dinhgia_tudong" placeholder="Định giá tự động">
 		</div>
 		<div class="tab">Lãi suất:
 			<div role="tabpanel">
@@ -626,5 +628,20 @@
 		var sotien = $('#sotien').val();
 		document.getElementById('sotien').value = new Intl.NumberFormat('VND', { style: 'currency', currency: 'VND' }).format(sotien);
 
+	});
+	$('#dinhgia').click(function() {
+		var loaisp = $('input[name=loaisp]:checked').val();
+		var sanpham = $('#thongtinsp').val();
+		
+		$.ajax({
+			url: 'http://localhost/webproduct/admin/admin/dinhgia',
+			type: 'POST',
+			data: {'loaisp': loaisp,'sanpham':sanpham},
+			success: function(data){
+				console.log(data);
+			}
+		});
+		
+		
 	});
 </script>

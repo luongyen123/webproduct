@@ -1,5 +1,8 @@
-<?php 
+<?php
+require FCPATH . 'vendor/autoload.php';
+use Phpml\Regression\LeastSquares;
 class Admin extends My_controller{
+
 	function __construct(){
 		parent:: __construct();
 		$this->benchmark->mark('code_start');
@@ -424,6 +427,53 @@ class Admin extends My_controller{
 			redirect(admin_url('admin/getIndexPhieucamdo/'));
 		}
 	}
+
+	public function dinhgia(){
+
+		$data_loai=['oto','xemay'];
+		$data_hang = ['Audi','BMW','Hyunda','Suzuki'];
+		$data_dong = ['A8','Q8','A6','Q3','Q5','X5','320i','X4','X3','X7','Accent','Grand I10','Sanraphe','Kona','Celerio','Swift','Ertiga','Vitara'];
+
+		$data_train=[
+			'Oto'=>[
+				'Audi'=>[
+					[0,2018],[0,2017],[1,2018],[1,2017],[2,2018],[2,2017],[3,2018],[3,2017],[4,2018],[4,2017]// A8=1,Q8=2,A6=3,Q3=4,Q5=5,
+				],
+				'BMW'=>[
+					[5,2018],[5,2017],[6,2018],[6,2017],[7,2018],[7,2017],[8,2018],[8,2017],[9,2018],[9,2017]// X5=1,320i=2,x4=3,X3=4,X7=5,
+				],
+				'Hyunda'=>[
+					[10,2018],[10,2017],[11,2018],[11,2017],[12,2018],[12,2017],[13,2018],[13,2017]// Accent=1,Grand110=2,Sanraphe=3,Kona=4
+				],
+				'Suzuki '=>[
+					[14,2018],[14,2017],[15,2018],[15,2017],[15,2018],[15,2017],[16,2018],[16,2017]// celerio=1,swift=2,Ertiga=3,vitara=4
+				]
+			]
+		];
+		$targets=[
+			'Oto'=>[
+				'Audi'=>[5830,5710,4500,4400,2250,2150,1075,992,2666,2500],
+				'BMW'=>[3599,3199,1689,1439,2399,2390,2063,1999,4200,3860],
+				'Hyunda'=>[475,435,375,340,1200,970,615,585],
+				'Suzuki'=>[410,359,549,539,689,639,679,629]
+
+			]
+		];
+		$loaisp = $this->input->post('loaisp');
+		$sanpham = $this->input->post('sanpham');
+
+		$sanpham = $array = explode(' ', $sanpham);
+		$hangxe = array_search($sanpham[0], $data_hang);
+		$dongxe = array_search($sanpham[1], $data_dong);
+
+
+
+		$regression = new LeastSquares();
+		$regression->train($data_train[$loaisp][$hangxe], $targets[$loaisp][$hangxe]);
+
+		echo $regression->predict([$dongxe,$sanpham[2]]);
+	}
+
 	function logout()
 	{
 		if($this->session->set_userdata('login'));{
