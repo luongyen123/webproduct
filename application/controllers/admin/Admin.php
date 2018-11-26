@@ -463,15 +463,15 @@ class Admin extends My_controller{
 		$sanpham = $this->input->post('sanpham');
 
 		$sanpham = $array = explode(' ', $sanpham);
-		$hangxe = array_search($sanpham[0], $data_hang);
+		
 		$dongxe = array_search($sanpham[1], $data_dong);
 
 
 
 		$regression = new LeastSquares();
-		$regression->train($data_train[$loaisp][$hangxe], $targets[$loaisp][$hangxe]);
+		$regression->train($data_train[$loaisp][$sanpham[0]], $targets[$loaisp][$sanpham[0]]);
 
-		echo $regression->predict([$dongxe,$sanpham[2]]);
+		echo $regression->predict([$dongxe,int($sanpham[2])]);
 	}
 
 	function logout()
