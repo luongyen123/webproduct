@@ -143,7 +143,7 @@
 			<input type="radio" name="loaisp" value="tablet" class="loaisp"> Tablet 
 			<p><input placeholder="Thông tin sản phẩm" oninput="this.className = ''" name="thongtinsp" id="thongtinsp"></p>
 			<button id="dinhgia" type="button">Định giá tự động</button>
-			<input type="text" name="dinhgia_tudong" placeholder="Định giá tự động">
+			<input type="text" name="dinhgia_tudong" placeholder="Định giá tự động" id="dinhgia_tudong">
 		</div>
 		<div class="tab">Lãi suất:
 			<div role="tabpanel">
@@ -502,7 +502,7 @@
         autocomplete(document.getElementById("thongtinsp"), oto_array);
 				break;
 			case "xemay":
-				var xemay_array =["Honda	Wave Alpha 2014", "Honda WaveS 2014","Honda Wave RSX 2014","Honda Lead 2014", "Honda Vison 2014", "Honda Air Blade 2014","Honda SH 2014", "Honda SH Mode 2014","Honda Winner 2014","Honda Future 2014","Honda Dream 2014",
+				var xemay_array =["Honda Wave Alpha 2014", "Honda WaveS 2014","Honda Wave RSX 2014","Honda Lead 2014", "Honda Vison 2014", "Honda Air Blade 2014","Honda SH 2014", "Honda SH Mode 2014","Honda Winner 2014","Honda Future 2014","Honda Dream 2014",
 				"Honda	Wave Alpha 2015", "Honda WaveS 2015","Honda Wave RSX 2015","Honda Lead 2015", "Honda Vison 2015", "Honda Air Blade 2015","Honda SH 2015", "Honda SH Mode 2015","Honda Winner 2015","Honda Future 2015","Honda Dream 2015",
 				"Honda	Wave Alpha 2016", "Honda WaveS 2016","Honda Wave RSX 2016","Honda Lead 2016", "Honda Vison 2016", "Honda Air Blade 2016","Honda SH 2016", "Honda SH Mode 2016","Honda Winner 2016","Honda Future 2016","Honda Dream 2016",
 				"Honda	Wave Alpha 2017", "Honda WaveS 2017","Honda Wave RSX 2017","Honda Lead 2017", "Honda Vison 2017", "Honda Air Blade 2017","Honda SH 2017", "Honda SH Mode 2017","Honda Winner 2017","Honda Future 2017","Honda Dream 2017",
@@ -514,7 +514,6 @@
 				"Yamaha Exciter 2018", "Yamaha Jupiter 2018"," Yamaha Sirius 2018", "Yamaha NVX 2018", "Yamaha TFX 2018","Yamaha Acruzo 2018",
 				"Suzuki VIVA 2014", "Suzuki Revo 2014", "Suzuki Axelo 2014", "Suzuki Impulse 2014","Suzuki GD110 2014","Suzuki GSX-S150 2014",
 					]
-				console.log("xemay");
 				autocomplete(document.getElementById("thongtinsp"), xemay_array);
 				break;
 			case "laptop":
@@ -639,6 +638,7 @@
 			data: {'loaisp': loaisp,'sanpham':sanpham},
 			success: function(data){
 				console.log(data);
+				document.getElementById('dinhgia_tudong').value=data;
 			}
 		});
 		

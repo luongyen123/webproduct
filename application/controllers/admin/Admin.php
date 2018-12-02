@@ -430,10 +430,9 @@ class Admin extends My_controller{
 
 	public function dinhgia(){
 
-		$data_loai=['oto','xemay'];
-		$data_hang = ['Audi','BMW','Hyunda','Suzuki'];
-		$data_dong = ['A8','Q8','A6','Q3','Q5','X5','320i','X4','X3','X7','Accent','Grand I10','Sanraphe','Kona','Celerio','Swift','Ertiga','Vitara'];
-
+		$data_loai=['oto','xemay'];		
+		$data_dong = ['A8','Q8','A6','Q3','Q5','X5','320i','X4','X3','X7','Accent','Grand I10','Sanraphe','Kona','Celerio','Swift','Ertiga','Wave Alpha','Fulture','Wave RSX','SH Mode','Jupiter','Nozza Grander','Janus','Sirius','VIVA'];
+		
 		$data_train=[
 			'Oto'=>[
 				'Audi'=>[
@@ -445,35 +444,201 @@ class Admin extends My_controller{
 				'Hyunda'=>[
 					[10,2018],[10,2017],[11,2018],[11,2017],[12,2018],[12,2017],[13,2018],[13,2017]// Accent=1,Grand110=2,Sanraphe=3,Kona=4
 				],
-				'Suzuki '=>[
+				'Suzuki'=>[
 					[14,2018],[14,2017],[15,2018],[15,2017],[15,2018],[15,2017],[16,2018],[16,2017]// celerio=1,swift=2,Ertiga=3,vitara=4
 				]
-			]
+			],
+			'xemay'=>[
+				'Honda'=>[
+					[17,2018],[17,2017],[17,2016],[18,2018],[18,2017],[18,2016],[19,2018],[19,2017],[19,2016],[20,2018],[20,2017],[20,2016]
+				],
+				'Yamaha'=>[
+					[21,2018],[21,2017],[21,2016],[22,2018],[22,2017],[22,2016],[23,2018],[23,2017],[23,2016],[24,2018],[24,2017],[24,2016]
+				],
+				'Suzuki'=>[
+					[19,2018],[19,2017],[19,2016],[19,2017]
+				],
+				
+			],
+			
 		];
 		$targets=[
 			'Oto'=>[
-				'Audi'=>[5830,5710,4500,4400,2250,2150,1075,992,2666,2500],
-				'BMW'=>[3599,3199,1689,1439,2399,2390,2063,1999,4200,3860],
-				'Hyunda'=>[475,435,375,340,1200,970,615,585],
-				'Suzuki'=>[410,359,549,539,689,639,679,629]
+				'Audi'=>[5830000000,5710000000,4500000000,4400000000,2250000000,2150000000,1075000000,992000000,2666000000,2500000000],
+				'BMW'=>[3599000000,3199000000,1689000000,1439000000,2399000000,2390000000,2063000000,1999000000,4200000000,3860000000],
+				'Hyunda'=>[475000000,435000000,375000000,340000000,1200000000,970000000,615000000,585000000],
+				'Suzuki'=>[410000000,359000000,549000000,539000000689000000,639000000,679000000,629000000]
+
+			],
+			'xemay'=>[
+				'Honda'=>[17790000,17700000,17000000,31200000,30990000,29990000,22490000,21500000,21990000,68500000,60400000,50490000],
+				'Yamaha'=>[29000000,28000000,26000000,43990000,41990000,39990000,33800000,31490000,29500000,22000000,19800000,19100000],
+				'Suzuki'=>[22990000,21600000,20000000,19800000]
 
 			]
 		];
 		$loaisp = $this->input->post('loaisp');
+
 		$sanpham = $this->input->post('sanpham');
 
 		$sanpham = $array = explode(' ', $sanpham);
 		
-		$dongxe = array_search($sanpham[1], $data_dong);
+		$tendong='';
 
-
-
+		for($i=1;$i<count($sanpham)-1;$i++){
+			$tendong.=$sanpham[$i]." ";
+		}
+		
+		$dongxe = array_search(trim($tendong), $data_dong);
+		
 		$regression = new LeastSquares();
-		$regression->train($data_train[$loaisp][$sanpham[0]], $targets[$loaisp][$sanpham[0]]);
+		
+		
+		// echo var_dump($targets[trim($loaisp)][trim($sanpham[0])]);
+		$regression->train($data_train[trim($loaisp)][trim($sanpham[0])], $targets[trim($loaisp)][trim($sanpham[0])]);
 
-		echo $regression->predict([$dongxe,int($sanpham[2])]);
+		echo number_format(round(($regression->predict([$dongxe,(int)$sanpham[count($sanpham)-1]]))/1000,0)*1000);
+	}
+	function tinhlai(){
+		$phieucam = $this->input->post('phieucam');
+		$banggia= $this->input->post('banggia');
+		$sotien = $this->input->post('sotien');
+		$tienlai = $this->input->post('tienlai');
+		$ngaydong = $this->input->post('ngaydong');
+		
+		$banggia = $this->banggia->lay_banggiaID($banggia);
+		$tienlai = json_decode($tienlai);
+
+		if($tienlai!="" || !empty($tienlai)){
+			$ngaydong_lai = [];
+			$tienlai_dong = [];
+			foreach ($tienlai as $value) {
+				$temp = (array)json_decode($value);
+				array_push($ngaydong_lai, $temp['ngaydong']);
+				array_push($tienlai_dong, $temp['sotiendong']);
+			}
+		}
+
+		$n = date_diff(date_create(date('d-m-Y')),date_create($ngaydong));
+		$n = (int)$n->format("%d");
+
+		$sotien = str_replace('₫', '', $sotien);
+		$sotien = str_replace(',', '', $sotien);
+		$sotien = (int)$sotien;
+
+		$laisuat = 0;
+		if($tienlai="" || empty($tienlai)){
+			$laisuat = $this->tinhLaiSuat($banggia, $sotien, $n);
+		}else{
+			$laisuat = $this->tinhLaiSuat($banggia, $sotien, $n, $ngaydong_lai, $tienlai_dong, $ngaydong);
+		}
+		
+		//echo "\n".$laisuat."\n";
+
+		$tienloi = $laisuat-$sotien;
+		$tienloi = number_format((int)$tienloi);
+		$data['tienloi']=$tienloi;
+		$laisuat= number_format($laisuat);
+		$data['laisuat']=$laisuat;
+		echo json_encode($data);
+
 	}
 
+	private function tinhLaiSuat($banggia, $sotien, $n, $ngaydong_lai = [], $tienlai_dong = [], $ngaydong=null)
+	{
+		$laisuat = 0;
+		if($banggia[0]->bg_loai == "ngay"){
+			$banggia[0]->bg_mucgia = json_decode($banggia[0]->bg_data, true);
+			$laisuat = $sotien;
+			for ($i=0; $i < $n; $i++) {
+				if ($laisuat < 5000000)
+				{
+					$lai = (int)$banggia[0]->bg_mucgia['ngay2'];
+					$lai /= 100;
+				}
+				else
+				{
+					if ($laisuat < 10000000)
+					{
+						$lai = (int)$banggia[0]->bg_mucgia['ngay5'];
+						$lai /= 100;
+					}
+					else
+					{
+						$lai = (int)$banggia[0]->bg_mucgia['ngay10'];
+						$lai /= 100;
+					}
+				}
+				$laisuat += $laisuat * $lai;
+				for($j=0; $j<count($ngaydong_lai);$j++){
+					$kt = date_diff(date_create($ngaydong),date_create($ngaydong_lai[$j]));
+					$kt = (int)$kt->format("%d");
+					if( ($kt - 1) == $i){
+						$laisuat -= $tienlai_dong[$j];
+					}
+				}
+			}
+		}
+		return round($laisuat/1000,0) * 1000;;
+	}
+
+	function donglai(){
+		$id = $this->input->post('phieucamdo');
+
+		$hoadon['hoten']=$this->input->post('nguoinop');
+		$hoadon['sochungminh']=$this->input->post('sochungminh');
+		$hoadon['diachi']=$this->input->post('diachi');
+		$hoadon['sodienthoai']=$this->input->post('sodienthoai');
+		$hoadon['sotiendong']=$this->input->post('sotiendong');
+
+		$mang=[];
+		$text = 'ngaydong';
+		$mang[$text] = $this->input->post('ngaydong');
+		$text = 'sotiendong';
+		
+		$mang[$text] = $this->input->post('sotiendong');
+		$mang_json = json_encode($mang);
+		
+		$tienlai = $this->input->post('tienlai');
+
+		if(empty($tienlai)){
+			$tienlai=[];
+		}else{
+			$tienlai = json_decode($tienlai);
+		}
+		
+
+		array_push($tienlai,$mang_json);
+		$tienlai = json_encode($tienlai);
+		
+		$this->phieucamdo->donglai($id,$tienlai);
+		$data['hoadon']=$hoadon;
+
+		$this->session->set_flashdata('success', 'Lưu thành công');
+		$this->load->view('admin/admin/inhoadon',$data);
+		
+	}
+
+	function thanhly(){
+
+		$data['khachhang']=$this->input->post('khachhang');
+		$data['chungminh']=$this->input->post('chungminh');
+		$data['tiengoc']=$this->input->post('tiengoc');
+		$data['tienlai']=$this->input->post('thanhly_lai');
+		$data['diachi']=$this->input->post('diachi');
+		$data['sodienthoai']=$this->input->post('sodienthoai');
+		$data['tong']=$this->input->post('thanhly_tong');
+
+		$phieucam_id = $this->input->post('thanhly_id');
+
+		$this->phieucamdo->thanhly($phieucam_id);
+
+		$this->load->view('admin/admin/thanhly',$data);
+	}
+
+	function inhoadon(){
+
+	}
 	function logout()
 	{
 		if($this->session->set_userdata('login'));{

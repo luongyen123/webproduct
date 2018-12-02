@@ -23,6 +23,15 @@ class Banggia_model extends CI_Model {
 		return $query->result();
 
 	}
+	public function lay_banggiaId($id){
+
+		$this->db->select('*');
+
+		$this->db->where('bg_id', $id);
+		$query = $this->db->get('banggia');
+
+		return $query->result();
+	}
 
 	public function luu_doigia_dien($data) {
 

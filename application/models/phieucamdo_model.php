@@ -27,5 +27,20 @@ class phieucamdo_model extends My_model
         return true;
 
     }
+    public function donglai($id,$data){
+        $this->db->set(
+                'tienlai',$data
+                );
+        $this->db->where('phieucam_id',$id);
+        $this->db->update('phieucamdo');
+        return true;
+    }
+
+    function thanhly($id){
+        $this->db->set('trangthai',1);
+        $this->db->where('phieucam_id',$id);
+        $this->db->update('phieucamdo');
+        return true;
+    }
 
 }?>
