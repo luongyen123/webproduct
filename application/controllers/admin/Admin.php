@@ -13,6 +13,9 @@ class Admin extends My_controller{
 		$this->load->Model('banggia_model','banggia');
 		$this->load->Model('Customer_model','customer');
 		$this->load->Model('phieucamdo_model','phieucamdo');
+		$this->load->Model('Hangxe_model','hangxe');
+		$this->load->Model('Dongxe_model','dongxe');
+		$this->load->Model('Sanpham_model','sanpham');
 	}
 	//ten thu muc view giong ten controller, ten file giong ten action
 	//load danh sach
@@ -181,7 +184,39 @@ class Admin extends My_controller{
 		$this->session->set_flashdata('message','xoa du lieu thanh cong');
 		redirect(admin_url('admin'));
 	}
+	function delete_banggia()
+	{
+		$id=$this->uri->segment('4'); 
+		
+		$id=intval($id);
+		// // lấy thông tin của quản trị viên
+		$info=$this->banggia->lay_banggiaId($id);
+		if(!$info){
+			$this->session->set_flashdata('message','khong ton tai quan tri vien');
+			redirect(admin_url('admin/banggia'));	
+		}
+		//thuc hien xoa
+		$this->banggia->delete_banggia($id);
+		$this->session->set_flashdata('message','xoa du lieu thanh cong');
+		redirect(admin_url('admin/banggia'));
+	}
 
+	function delete_customer()
+	{
+		$id=$this->uri->segment('4'); 
+		
+		$id=intval($id);
+		// // // lấy thông tin của quản trị viên
+		// $info=$this->banggia->lay_banggiaId($id);
+		// if(!$info){
+		// 	$this->session->set_flashdata('message','khong ton tai quan tri vien');
+		// 	redirect(admin_url('admin/banggia'));	
+		// }
+		//thuc hien xoa
+		$this->customer->delete_customer($id);
+		$this->session->set_flashdata('message','xoa du lieu thanh cong');
+		redirect(admin_url('admin/getIndexCustomer'));
+	}
 
 	function banggia(){
 		$giangay = $this->banggia->lay_banggia('ngay');
@@ -212,8 +247,6 @@ class Admin extends My_controller{
 		$this->load->view('footer');
 		
 	}
-
-
 
 	function banggia_dien_them() {
 			$this->form_validation->set_rules('bg_ten', 'Tên bảng giá', 'required|xss_clean');
@@ -301,6 +334,51 @@ class Admin extends My_controller{
 			}
 		}
 
+	function banggia_ngay_sua(){
+		$this->form_validation->set_rules('bg_id', 'Id', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_ten', 'Tên bảng giá', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_muc1', 'Mức 1', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_gia1', 'Mức giá 1', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_muc2', 'Mức 2', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_gia2', 'Mức giá 2', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_muc3', 'Mức 3', 'required|xss_clean');
+		$this->form_validation->set_rules('bg_gia3', 'Mức giá 3', 'required|xss_clean');
+
+		if ($this->form_validation->run() == FALSE) {
+			$header['title'] = "Thêm bảng giá ngày";
+			$header['active'] = 'banggia';
+			$this->load->view('header', $header);
+			$this->load->view('block/left', $header);
+			$this->load->view('block/top');
+			$this->load->view('admin/admin/banggia_themngay');
+			$this->load->view('block/right');
+			$this->load->view('footer');
+		} else {
+
+		$bg_id =$this->form_validation->set_value('bg_id', 'Id', 'required|xss_clean');
+		$new_data['bg_ten'] 	= $this->form_validation->set_value('bg_ten', 'Tên bảng giá', 'required|xss_clean');
+		
+		$text = 'ngay';
+		$text .= $this->form_validation->set_value('bg_muc1', 'Mức 1', 'required|xss_clean');
+		$mang[$text] = $this->form_validation->set_value('bg_gia1', 'Giá mức 1', 'required|xss_clean');
+		
+		$text = 'ngay';
+		$text .= $this->form_validation->set_value('bg_muc2', 'Mức 2', 'required|xss_clean');
+		$mang[$text] =  $this->form_validation->set_value('bg_gia2', 'Giá mức 2 ', 'required|xss_clean');
+		
+		$text = 'ngay';
+		$text .= $this->form_validation->set_value('bg_muc3', 'Mức 3', 'required|xss_clean');
+		$mang[$text] = $this->form_validation->set_value('bg_gia3', 'Giá mức 3', 'required|xss_clean');
+		
+		$mang_json = json_encode($mang);
+		
+		$new_data['bg_loai'] = 'ngay';
+		$new_data['bg_data'] = $mang_json;
+		$this->banggia->edit_lai_ngay($bg_id,$new_data);
+		$this->session->set_flashdata('success', 'Sửa thành công');
+		redirect(admin_url('admin/banggia/'));
+	}
+}
 	function getIndexCustomer(){
 		$customer = $this->customer->getDS();
 		$data['customers'] = $customer;
@@ -341,6 +419,37 @@ class Admin extends My_controller{
 				$new_data['CMND'] = $this->form_validation->set_value('CMND', 'Số chứng minh thư', 'required|xss_clean');
 				
 				$this->customer->luu_thongtin($new_data);
+				$this->session->set_flashdata('success', 'Lưu thành công');
+				redirect(admin_url('admin/getIndexCustomer/'));
+			}
+		}
+
+	function customer_sua() {
+			$this->form_validation->set_rules('customer_id', 'ID', 'required|xss_clean');
+			$this->form_validation->set_rules('fullname', 'Họ tên', 'required|xss_clean');
+			$this->form_validation->set_rules('phone', 'Số điện thoại', 'required|xss_clean');
+			$this->form_validation->set_rules('address', 'Địa chỉ', 'required|xss_clean');
+			$this->form_validation->set_rules('CMND', 'Số chứng minh thư', 'required|xss_clean');
+			if ($this->form_validation->run() == FALSE) {
+				$header['title'] = "Thêm khách hàng";
+				
+				$this->load->view('header', $header);
+				$this->load->view('block/left', $header);
+				$this->load->view('block/top');
+				$this->load->view('admin/admin/customer_them');
+				$this->load->view('block/right');
+				$this->load->view('footer');
+			} else {
+				$customer_id =$this->form_validation->set_value('customer_id', 'ID', 'required|xss_clean');
+				$new_data['fullname'] 	= $this->form_validation->set_value('fullname', 'Họ tên', 'required|xss_clean');
+				
+				$new_data['phone']= $this->form_validation->set_value('phone', 'Số điện thoại', 'required|xss_clean');
+
+				$new_data['address'] =  $this->form_validation->set_value('address', 'Địa chỉ', 'required|xss_clean');
+				
+				$new_data['CMND'] = $this->form_validation->set_value('CMND', 'Số chứng minh thư', 'required|xss_clean');
+				
+				$this->customer->edit_customer($customer_id,$new_data);
 				$this->session->set_flashdata('success', 'Lưu thành công');
 				redirect(admin_url('admin/getIndexCustomer/'));
 			}
@@ -423,81 +532,90 @@ class Admin extends My_controller{
 			$new_data['ngaycam']=time();
 			$new_data['sotien']=$this->form_validation->set_value('sotien', 'Bảng giá', 'required|xss_clean');
 			$this->phieucamdo->luu_thongtin($new_data);
+			$data=$new_data;
 			$this->session->set_flashdata('success', 'Lưu thành công');
-			redirect(admin_url('admin/getIndexPhieucamdo/'));
+			$this->load->view('admin/admin/hopdong', $data);
 		}
 	}
 
 	public function dinhgia(){
+		$train = $this->sanpham->getSanPham();
+		$data_trains = [];
+		$targets = [];
+		$data_dongxe = [];
+		$data_gia = [];
+		$data_hangxe_train = [];
+		$data_hangxe_target = [];
 
-		$data_loai=['oto','xemay'];		
-		$data_dong = ['A8','Q8','A6','Q3','Q5','X5','320i','X4','X3','X7','Accent','Grand I10','Sanraphe','Kona','Celerio','Swift','Ertiga','Wave Alpha','Fulture','Wave RSX','SH Mode','Jupiter','Nozza Grander','Janus','Sirius','VIVA'];
-		
-		$data_train=[
-			'Oto'=>[
-				'Audi'=>[
-					[0,2018],[0,2017],[1,2018],[1,2017],[2,2018],[2,2017],[3,2018],[3,2017],[4,2018],[4,2017]// A8=1,Q8=2,A6=3,Q3=4,Q5=5,
-				],
-				'BMW'=>[
-					[5,2018],[5,2017],[6,2018],[6,2017],[7,2018],[7,2017],[8,2018],[8,2017],[9,2018],[9,2017]// X5=1,320i=2,x4=3,X3=4,X7=5,
-				],
-				'Hyunda'=>[
-					[10,2018],[10,2017],[11,2018],[11,2017],[12,2018],[12,2017],[13,2018],[13,2017]// Accent=1,Grand110=2,Sanraphe=3,Kona=4
-				],
-				'Suzuki'=>[
-					[14,2018],[14,2017],[15,2018],[15,2017],[15,2018],[15,2017],[16,2018],[16,2017]// celerio=1,swift=2,Ertiga=3,vitara=4
-				]
-			],
-			'xemay'=>[
-				'Honda'=>[
-					[17,2018],[17,2017],[17,2016],[18,2018],[18,2017],[18,2016],[19,2018],[19,2017],[19,2016],[20,2018],[20,2017],[20,2016]
-				],
-				'Yamaha'=>[
-					[21,2018],[21,2017],[21,2016],[22,2018],[22,2017],[22,2016],[23,2018],[23,2017],[23,2016],[24,2018],[24,2017],[24,2016]
-				],
-				'Suzuki'=>[
-					[19,2018],[19,2017],[19,2016],[19,2017]
-				],
-				
-			],
+		//echo var_dump($train);
+		foreach($train as $value){
 			
-		];
-		$targets=[
-			'Oto'=>[
-				'Audi'=>[5830000000,5710000000,4500000000,4400000000,2250000000,2150000000,1075000000,992000000,2666000000,2500000000],
-				'BMW'=>[3599000000,3199000000,1689000000,1439000000,2399000000,2390000000,2063000000,1999000000,4200000000,3860000000],
-				'Hyunda'=>[475000000,435000000,375000000,340000000,1200000000,970000000,615000000,585000000],
-				'Suzuki'=>[410000000,359000000,549000000,539000000689000000,639000000,679000000,629000000]
+			$temp = [(int)$value->dongxe_id, (int)$value->namsx];
+			if (empty($data_dongxe)){
+				$data_dongxe= [];
+			}
+			if (empty($data_gia)){
+				$data_gia= [];
+			}
+			if (empty($data_hangxe_train[$value->hangxe_id])){
+				$data_dongxe= [];
+				$data_hangxe_train[$value->hangxe_id]= [];
+			}
+			if (empty($data_trains[$value->loaixe])){
+				$data_dongxe= [];
+				$data_hangxe_train[$value->hangxe_id]= [];
+				$data_trains[$value->loaixe]= [];
+			}
+			if (empty($data_hangxe_target[$value->hangxe_id])){
+				$data_gia= [];
+				$data_hangxe_target[$value->hangxe_id]= [];
+			}
+			if (empty($targets[$value->loaixe])){
+				$data_gia= [];
+				$data_hangxe_target[$value->hangxe_id]= [];
+				$data_trains[$value->loaixe]= [];
+			}
+			array_push($data_dongxe, $temp);
+			array_push($data_gia, (float)$value->gia);
+			$data_hangxe_train[$value->hangxe_id] = $data_dongxe;
+			$data_hangxe_target[$value->hangxe_id] = $data_gia;
+			$data_trains[$value->loaixe]=$data_hangxe_train;
+			$targets[$value->loaixe]=$data_hangxe_target;
+		}
+		
 
-			],
-			'xemay'=>[
-				'Honda'=>[17790000,17700000,17000000,31200000,30990000,29990000,22490000,21500000,21990000,68500000,60400000,50490000],
-				'Yamaha'=>[29000000,28000000,26000000,43990000,41990000,39990000,33800000,31490000,29500000,22000000,19800000,19100000],
-				'Suzuki'=>[22990000,21600000,20000000,19800000]
-
-			]
-		];
 		$loaisp = $this->input->post('loaisp');
 
 		$sanpham = $this->input->post('sanpham');
 
-		$sanpham = $array = explode(' ', $sanpham);
-		
-		$tendong='';
+		$sanpham = $array = explode(' ', $sanpham);		
 
-		for($i=1;$i<count($sanpham)-1;$i++){
-			$tendong.=$sanpham[$i]." ";
+		$hangxe_id = $this->hangxe->getIdHangxe($sanpham[0],$loaisp);
+		
+		if($hangxe_id == null){
+			echo "Chưa có dữ liệu train cho hãng xe này";
+		}else{
+			$tendong='';
+
+			for($i=1;$i<count($sanpham)-1;$i++){
+				$tendong.=$sanpham[$i]." ";
+			}
+			$dongxe= $this->dongxe->getIdDongxe($tendong,$loaisp);
+
+			// $dongxe = array_search(trim($tendong), $data_dong);
+			if($dongxe == null){
+				echo "Chưa có dữ liệu train trên cho dòng xe này";
+			}else{
+				$regression = new LeastSquares();
+				
+			// echo var_dump($targets[trim($loaisp)][trim($sanpham[0])]);
+				$regression->train($data_trains[trim($loaisp)][$hangxe_id], $targets[trim($loaisp)][$hangxe_id]);
+
+				echo number_format(round(($regression->predict([$dongxe,(int)$sanpham[count($sanpham)-1]]))/1000,0)*1000);
+			}
 		}
 		
-		$dongxe = array_search(trim($tendong), $data_dong);
 		
-		$regression = new LeastSquares();
-		
-		
-		// echo var_dump($targets[trim($loaisp)][trim($sanpham[0])]);
-		$regression->train($data_train[trim($loaisp)][trim($sanpham[0])], $targets[trim($loaisp)][trim($sanpham[0])]);
-
-		echo number_format(round(($regression->predict([$dongxe,(int)$sanpham[count($sanpham)-1]]))/1000,0)*1000);
 	}
 	function tinhlai(){
 		$phieucam = $this->input->post('phieucam');
@@ -639,6 +757,81 @@ class Admin extends My_controller{
 	function inhoadon(){
 
 	}
+
+	function sanphamIndex(){
+		$sanpham = $this->sanpham->getChitiet();
+
+		$data['sanphams'] = $sanpham;
+
+		$header['title'] = "Danh sách dữ liệu train";
+		$header['active'] = 'sanpham';
+		
+		$this->load->view('header', $header);
+		$this->load->view('block/left', $header);
+		$this->load->view('block/top');
+		$this->load->view('admin/admin/sanpham', $data);
+		$this->load->view('block/right');
+		$this->load->view('footer');
+	}
+
+	function sanpham_them() {
+			$this->form_validation->set_rules('tenhang', 'Hãng sản phẩm', 'required|xss_clean');
+			$this->form_validation->set_rules('tendong', 'Dòng sản phẩm', 'required|xss_clean');
+			$this->form_validation->set_rules('namsx', 'Năm sản xuất/Dung lượng', 'required|xss_clean');
+			$this->form_validation->set_rules('gia', 'Giá sản phẩm', 'required|xss_clean');
+			$this->form_validation->set_rules('loaixe', 'Loại xe', 'required|xss_clean');
+
+			if ($this->form_validation->run() == FALSE) {
+				$header['title'] = "Thêm dữ liệu train";
+				
+				$this->load->view('header', $header);
+				$this->load->view('block/left', $header);
+				$this->load->view('block/top');
+				$this->load->view('admin/admin/sanpham_them');
+				$this->load->view('block/right');
+				$this->load->view('footer');
+			} else {
+				$tenhang= $this->form_validation->set_value('tenhang', 'Hãng sản phẩm', 'required|xss_clean');
+				$loaixe = $this->form_validation->set_value('loaixe', 'Loại xe', 'required|xss_clean');		
+				$tenhang_check = $this->hangxe->getIdHangxe($tenhang,$loaixe);
+
+				if($tenhang_check == null){
+					$hang['tenhang']=$tenhang;
+					$hang['loaixe']=$loaixe;
+
+					$this->hangxe->luu_hang($hang);
+
+					$new_data['hangxe_id']=$this->hangxe->getIdHangxe($tenhang,$loaixe);
+				}else{
+					$new_data['hangxe_id']=$tenhang_check;
+				}
+
+				$tendong= $this->form_validation->set_value('tendong', 'Dòng sản phẩm', 'required|xss_clean');
+				$tendong_check = $this->dongxe->getIdDongxe($tendong,$loaixe);
+
+				if($tendong_check == null){
+					$dong['tendong']=$tendong;
+					$dong['loaixe']=$loaixe;
+
+					$this->dongxe->luu_dong($dong);
+
+					$new_data['dongxe_id']=$this->dongxe->getIdDongxe($tendong,$loaixe);
+				}else{
+					$new_data['dongxe_id']=$tendong_check;
+				}
+
+				$new_data['namsx'] =  $this->form_validation->set_value('namsx', 'Năm sản xuất/Dung lượng', 'required|xss_clean');
+				
+				$new_data['gia'] = $this->form_validation->set_value('gia', 'Giá sản phẩm', 'required|xss_clean');
+				$new_data['loaixe'] = $this->form_validation->set_value('loaixe', 'Loại xe', 'required|xss_clean');
+				
+				$this->sanpham->luu_sanpham($new_data);
+				$this->session->set_flashdata('success', 'Lưu thành công');
+				redirect(admin_url('admin/sanphamIndex/'));
+			}
+		}
+
+
 	function logout()
 	{
 		if($this->session->set_userdata('login'));{

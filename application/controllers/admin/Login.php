@@ -5,12 +5,15 @@ class Login extends CI_Controller{
 	function __construct()
 	{
 		parent:: __construct();
+		$this->load->library('session');
+		$this->load->Model('Admin_model');
 		// laay ra phan doan tinh sau base_url
 		$controller=$this->uri->segment(1);
 		switch ($controller) {
 			case'admin':
 			{
 				$this->load->helper('admin');
+
 				//$this->_check_login();
 				break;
 			}
@@ -33,7 +36,8 @@ class Login extends CI_Controller{
 			$this->form_validation->set_rules('login','login','callback_check_login');
 			if($this->form_validation->run())
 			{
-				//session thông báo đăng nhập thành công gán login =true
+				$data=$this->Login_model->getData($this->input->post('email'));		
+				$this->session->set_userdata('logged_in',$data);
 				$this->session->set_userdata('login',true);
 				redirect(admin_url('home'));
 			}
@@ -53,6 +57,7 @@ class Login extends CI_Controller{
 		$this->load->Model('Login_model');
 
 		if($this->Login_model->check_exists($where)){
+		
 			return true;
 		}
 		

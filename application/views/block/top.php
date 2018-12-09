@@ -14,7 +14,8 @@
 
 	<div class="top-bar col-content radius bg-white text-center">
 
-		<div class="avatar img-radius"><img src="" /> <span class="glyphicon glyphicon-user glyphicon"></span> Quản trị viên: <strong><?php echo $this->session->userdata('username');?></strong></div>
+		<div class="avatar img-radius"><img src="" /> <span class="glyphicon glyphicon-user glyphicon"></span> <?php echo ($this->session->userdata())['logged_in']->name;?><strong><?php echo $this->session->set_userdata('username');?></strong></div>
+	<!--  -->
 
 	</div>
 
@@ -25,8 +26,8 @@
 <div class="col-md-1">
 
 	<div class="top-bar col-content radius">
-
-		<?php echo anchor('/auth/logout','Thoát', 'class="btn btn-danger"');?>
+		<a href="<?php echo admin_url('admin/logout')?>" class="btn btn-danger">Thoát</a>
+		
 
 	</div>
 

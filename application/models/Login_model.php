@@ -16,4 +16,12 @@ class Login_model extends CI_model
 		}
 	}
 
+	function getData($email){
+		$this->db->select('*');
+		$this->db->where('email',$email);
+		$query = $this->db->get('admin');
+		return $query->row();
+	}
+
+
 }

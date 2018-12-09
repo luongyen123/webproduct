@@ -64,4 +64,17 @@ class Banggia_model extends CI_Model {
 
 	}
 
+	public function edit_lai_ngay($id,$data){
+
+		$this->db->set($data);
+		$this->db->where('bg_id', $id);
+		$this->db->update('banggia');
+
+		return true;
+	}
+
+	public function delete_banggia($id){
+		$this->db->delete('banggia', array('bg_id' => $id));
+	
+	}
 }

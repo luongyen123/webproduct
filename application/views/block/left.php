@@ -24,6 +24,12 @@
 						</a>
 					</li>
 					
+					<li>
+						<a href="<?php echo admin_url('admin/sanphamIndex')?>">
+							<div class="glyphicon glyphicon-th"></div>Sản phẩm
+						</a>
+					</li>
+					
 					<!--<li class="<?php //if(isset($active) && $active == "thongke") { //echo "active"; } ?>">
 						<?php //echo anchor('/admin/thongke','<div class="glyphicon glyphicon-dashboard"></div> Thống kê', '');?>
 					</li>-->

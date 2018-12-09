@@ -57,7 +57,7 @@
 											<p style="font-size: 14px; font-weight: bold;">Số tiền lãi tính đến ngày hôm nay:</h5>
 											</div>
 											<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-												<p id="laisuat"></p>
+												<p class="laisuat"></p>
 											</div>
 										</div>
 										<form action="<?php echo admin_url('admin/donglai');?>" method="POST">
@@ -125,14 +125,14 @@
 													</div>
 													<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 														<label for="pwd">Số tiền lãi:</label>
-														<input type="text" name="thanhly_lai" value="" class="form-control" id="thanhly_lai" >
+														<input type="text" name="thanhly_lai" value="" class="form-control thanhly_lai" readonly >
 													</div>
 												</div>
 												
 											</div>
 											<div class="form-group">
 												<label for="pwd">Tổng tiền thanh lý</label>
-												<input type="text" name="thanhly_tong" value="" class="form-control" id="thanhly_tong" >
+												<input type="text" name="thanhly_tong" value="" class="form-control thanhly_tong" readonly>
 											</div>
 											
 										</div>
@@ -179,7 +179,9 @@
 												<p style="font-size: 14px; font-weight: bold;">Số tiền lãi tính đến ngày hôm nay:</h5>
 												</div>
 												<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-													<p id="laisuat"></p>
+													<p class="laisuat">
+														
+													</p>
 												</div>
 											</div>
 											<form action="<?php echo admin_url('admin/donglai');?>" method="POST">
@@ -247,14 +249,14 @@
 														</div>
 														<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 															<label for="pwd">Số tiền lãi:</label>
-															<input type="text" name="thanhly_lai" value="" class="form-control" id="thanhly_lai" >
+															<input type="text" name="thanhly_lai" value="" class="form-control thanhly_lai" readonly>
 														</div>
 													</div>
 													
 												</div>
 												<div class="form-group">
 													<label for="pwd">Tổng tiền thanh lý</label>
-													<input type="text" name="thanhly_tong" value="" class="form-control" id="thanhly_tong" >
+													<input type="text" name="thanhly_tong" value="" class="form-control thanhly_tong" readonly >
 												</div>
 												
 											</div>
@@ -289,10 +291,20 @@
 			type: 'POST',
 			data: {'phieucam': phieucam_id,'banggia':banggia, 'sotien':sotien,'tienlai':tienlai, 'ngaydong': ngaycam},
 			success: function(data){
-				
-				document.getElementById('laisuat').innerHTML=(JSON.parse(data)).tienloi+" VNĐ";
-				document.getElementById('thanhly_lai').value=(JSON.parse(data)).tienloi+" VNĐ";
-				document.getElementById('thanhly_tong').value=(JSON.parse(data)).laisuat+" VNĐ";
+				console.log(data);
+				var x=document.getElementsByClassName('laisuat');
+				for(var i=0;i<x.length;i++){
+					x[i].innerHTML=(JSON.parse(data)).tienloi+" VNĐ";
+				}
+				// document.getElementsByClassName('laisuat').innerHTML
+				x=document.getElementsByClassName('thanhly_lai');
+				for(var i=0;i<x.length;i++){
+					x[i].value=(JSON.parse(data)).tienloi+" VNĐ";
+				}
+				x=document.getElementsByClassName('thanhly_tong');
+				for(var i=0;i<x.length;i++){
+					x[i].value=(JSON.parse(data)).laisuat+" VNĐ";
+				}
 			}
 		});
 	});

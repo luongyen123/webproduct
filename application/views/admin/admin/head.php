@@ -3,8 +3,9 @@
 		
 		
 		<div class="horControlB menu_action">
+			<?php if(($this->session->userdata())['logged_in']->role_type == '1'){?>
 			<ul>
-				<li><a href="<?php echo admin_url('admin/add')?>">
+				<li><a href="<?php echo admin_url('admin/add_user')?>">
 					<img src="<?php echo public_url('admin')?>/images/icons/control/16/add.png">
 					<span>Thêm mới </span>
 				</a></li>
@@ -14,6 +15,7 @@
 					<span>Danh sách</span>
 				</a></li>
 			</ul>
+		<?php }?>
 		</div>
 		
 		<div class="clear"></div>

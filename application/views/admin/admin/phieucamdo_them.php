@@ -86,7 +86,9 @@
 	<div class="main-content col-content radius bg-white">
 	<?php echo form_open($this->uri->uri_string(), 'role="form" class="form-horizontal" id="regForm"'); ?>
 		<div class="tab">Thông tin khách hàng:
-			<table class="table table-hover">
+			<div ><a class="btn btn-success btn-sm" onclick="myFunction()">Khách hàng có sẵn</a><br></div>
+			<div>
+			<table class="table table-hover" id="khachhang_daco" style="display: none">
 
 				<thead>
 
@@ -133,7 +135,7 @@
 			<p><input placeholder="Họ tên" oninput="this.className = ''" name="fullname" id="ho_ten"></p>
 			<p><input placeholder="Số điện thoại" oninput="this.className = ''" name="phone" id="sodienthoai"></p>
 			<p><input placeholder="Địa chỉ" oninput="this.className = ''" name="address" id="address"></p>
-
+			</div>
 		</div>
 		<div class="tab">Sản phẩm:
 			<input type="radio" name="loaisp" value="Oto" class="loaisp"> Ô tô
@@ -518,10 +520,10 @@
 				break;
 			case "laptop":
 				console.log("laptop");
-				var laptop_array =[" DELL  Ins N3452A"," DELL  N3552"," DELL  N3452 Pen"," DELL  N3451N2840/2GB/500GB","DELL  N3442 3558U/4GB/500GB"," DELL PENTIUM Dell 3442/ Penitum 3558u/ Ram 4G/ Hdd 500G 2016",
-					 "ASUS  X402CA /P1007U/2GB/500GB","ASUS  X402CA /P1007U/2GB/500GB","ASUS  E202SA/ N3050/2GB/500GB","ASUS  X453 /N2840/2GB/500GB","ASUS  X551C /P1007U/2GB/500GB",
-					"ACER  Z1401 N2940/2GB/500GB","ACER  4738 P6100/2GB/500GB","ACER  Aspire 4738/Core i3-M350/RAM 2GB/HDD 500GB","ACER  Aspire V3-371/Core i5-4200u/RAM 4G/HDD 500GB",
-					" LENOVO  B470e Pen B970/2GB/500GB","LENOVO  Z5070/ Core i7 4510u/ RAM 8GB/ HDD 500GB","LENOVO  Z5170/ Core i7 5500u/ RAM 4GB/ HDD 500GB"," LENOVO  IdeaPad 100 N2840",
+				var laptop_array =[" DELL Ins N3452A"," DELL N3552"," DELL N3452 Pen"," DELL  N3451N2840/2GB 500","DELL N3442 3558U/4GB 500",
+					 "ASUS X402CA /P1007U/2GB 500","ASUS X402CA /P1007U/2GB 500","ASUS E202SA/ N3050/2GB 500","ASUS X453 /N2840/2GB 500","ASUS X551C /P1007U/2GB 500",
+					"ACER Z1401 N2940/2GB 500","ACER 4738 P6100/2GB 500","ACER Aspire 4738/Core i3-M350/RAM/2GB/HDD 500","ACER Aspire V3-371/Corei5-4200u/RAM4G/HDD 500",
+					"LENOVO B470e Pen B970/2GB 500","LENOVO Z5070/Corei7 4510u/ RAM 8GB/ HDD 500GB","LENOVO  Z5170/ Core i7 5500u/ RAM 4GB/ HDD 500GB"," LENOVO  IdeaPad 100 N2840",
 					"HP  Stream N2840/2GB/500GB","HP  X360/ N3700/4GB/500GB","HP  350/Core i3-4005u/RAM 4GB/HDD 500GB","HP  8460p/Core i3-2330m/RAM 4GB/HDD 320GB","HP  1000 /Core i5-3230m/RAM 4GB/HDD 500GB",
 					];
 				autocomplete(document.getElementById("thongtinsp"), laptop_array);
@@ -529,10 +531,10 @@
 				break;
 			case "dienthoai":
 				console.log("dienthoai");
-				var dienthoai_array=["Oppo F1 64Gb", "Oppo R5 64Gb","Oppo A71 64Gb","Oppo F5 64Gb","Oppo F3 64Gb", "Oppo A37 64Gb","Oppo Mirror3 64Gb",
-					 "iphone 5 32Gb", "iphone 5S 32Gb","iphone 6 32Gb", "iphone 6S 32Gb","iphone 7 32Gb","iphone 7s 32Gb","iphone 8 32Gb",
-					"iphone 5 64Gb", "iphone 5S 64Gb","iphone 6 64Gb", "iphone 6S 64Gb","iphone 7 64Gb","iphone 7s 64Gb","iphone 8 64Gb",
-					"Samsung Galaxy A5 64Gb","Samsung Galaxy A8 64Gb","Samsung Galaxy J2 64Gb","Samsung Galaxy J1 64Gb","Samsung Galaxy J2 64Gb","Samsung Galaxy J7 64Gb",
+				var dienthoai_array=["Oppo F1 64", "Oppo R5 64","Oppo A71 64","Oppo F5 64","Oppo F3 64", "Oppo A37 64","Oppo Mirror3 6",
+					 "iphone 5 32", "iphone 5S 32","iphone 6 32", "iphone 6S 32","iphone 7 3","iphone 7s 32","iphone 8 32",
+					"iphone 5 64", "iphone 5S 64","iphone 6 64", "iphone 6S 64","iphone 7 64","iphone 7s 64","iphone 8 64",
+					"Samsung Galaxy A5 64","Samsung Galaxy A8 64","Samsung Galaxy J2 64","Samsung Galaxy J1 64","Samsung Galaxy J2 64","Samsung Galaxy J7 64",
 
 					]
 				autocomplete(document.getElementById("thongtinsp"), dienthoai_array);
@@ -644,4 +646,14 @@
 		
 		
 	});
+</script>
+<script>
+    function myFunction() {
+		  var x = document.getElementById("khachhang_daco");
+		  if (x.style.display === "none") {
+		    x.style.display = "block";
+		  } else {
+		    x.style.display = "none";
+		  }
+	}
 </script>

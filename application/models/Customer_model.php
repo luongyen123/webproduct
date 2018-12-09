@@ -28,4 +28,18 @@ class customer_model extends My_model
 
     }
 
+    public function edit_customer($id,$data){
+
+        $this->db->set($data);
+        $this->db->where('id', $id);
+        $this->db->update('customer');
+
+        return true;
+    }
+
+    public function delete_customer($id){
+        $this->db->delete('customer', array('id' => $id));
+    
+    }
+
 }?>

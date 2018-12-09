@@ -14,7 +14,9 @@ class Login extends My_controller{
 			if($this->form_validation->run())
 			{
 				//set_userdata gán dl cho biến session
-				$this->session->set_userdata('login',true);
+
+				$data=$this->Admin_model->getData($this->input->post('email'));		
+				$this->session->set_userdata('logged_in',$data);
 				 redirect(admin_url('admin'));
 			}
 		}
@@ -30,6 +32,9 @@ class Login extends My_controller{
 		// điều kiện email ,pass đăng nhập trùng với db
 		$where=array('email' => $email,'password' => $password);
 		if($this->Admin_model->check_exists($where)){
+			$data=$this->Admin_model->getData($email);
+
+			$this->session->set_userdata('logged_in',$data);
 			return true;
 		}
 
